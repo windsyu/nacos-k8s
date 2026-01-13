@@ -1,0 +1,52 @@
+apiVersion: nacos.io/v1alpha1  
+kind: Nacos  
+metadata:  
+  name: nacos-custom  
+spec:  
+  type: cluster  
+  image: nacos/nacos-server:latest
+  replicas: 3
+  database:  
+    type: "mysql"  
+    mysqlHost: "mysql.default.svc.cluster.local"  
+    mysqlPort: "3306"  
+    mysqlDb: "nacos_config"  
+    mysqlUser: "root"  
+    mysqlPassword: "root123"  
+    
+  volume:  
+    enabled: true  
+    storageClass: local-path  
+    requests:  
+      storage: 2Gi  
+
+  env:
+    - name: NACOS_AUTH_ENABLE
+      value: "true"
+    - name: NACOS_AUTH_TOKEN
+      value: "bmFjb3Npc291cmJlc3RjaG9pY2Vmb3Jjb25maWd1cmF0aW9uY2VudGVyCg=="
+      #nacosisourbestchoiceforconfigurationcenter
+    - name: NACOS_AUTH_IDENTITY_KEY
+      value: token-key
+    - name: NACOS_AUTH_IDENTITY_VALUE
+      value: token-value
+    - name: MYSQL_SERVICE_DB_PARAM
+      value: "characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&connectTimeout=1000&socketTimeout=3000&autoReconnect=true"
+  
+
+    # # 将所有环境变量转换为配置文件  
+  # config: |  
+  #   # 数据库配置  
+  #   db.url.0=jdbc:mysql://mysql.default.svc.cluster.local:3306/nacos_config?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&connectTimeout=1000&socketTimeout=3000&autoReconnect=true  
+  #   db.user.0=root  
+  #   db.password.0=root123  
+  #   db.num=1  
+      
+  #   # 认证配置  
+  #   nacos.core.auth.enabled=true  
+  #   nacos.core.auth.default.token.secret.key=emhlc2hpeWl0aWFvc2hlbnFpZGV0aWFubHU1MjAxMzE0Cg==  
+  #   nacos.core.auth.server.identity.key=token-key  
+  #   nacos.core.auth.server.identity.value=token-value  
+      
+  #   # 服务器配置  
+  #   server.port=8848

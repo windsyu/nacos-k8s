@@ -2,12 +2,13 @@ package operator
 
 import (
 	"fmt"
-	batchv1 "k8s.io/api/batch/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"nacos.io/nacos-operator/pkg/util/merge"
 	"os"
 	"path/filepath"
 	"strconv"
+
+	batchv1 "k8s.io/api/batch/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"nacos.io/nacos-operator/pkg/util/merge"
 
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
@@ -39,7 +40,7 @@ for element in ${array[@]}
 do
   while true
   do
-    ping $element -c 1 > /dev/stdout
+    ping -c 1 $element  > /dev/stdout
     if [[ $? -eq 0 ]]; then
       echo $element "all domain ready"
       break
