@@ -91,3 +91,5 @@ go.work.sum
 # Chart dependencies
 **/charts/*.tgz
 
+#所有二进制文件不存储
+save/*
